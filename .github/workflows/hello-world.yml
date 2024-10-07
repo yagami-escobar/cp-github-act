@@ -48,7 +48,7 @@ jobs: # A workflow run is made up of one or more jobs that can run sequentially 
           echo "You are in the $ENVIRONMENT environment !!"
 
       - name: run hello-world from nodejs
-        run: node script/index.js
+        run: node index.js
       - name: run a multi-line script # Runs a set of commands using the runners shell
         run: |
           echo " *************** PREDIFINED ENVS ***************"
