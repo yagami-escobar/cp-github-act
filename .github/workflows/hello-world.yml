@@ -57,15 +57,15 @@ jobs: # A workflow run is made up of one or more jobs that can run sequentially 
           echo "build-id -> $GITHUB_RUN_ID"
           echo "run-nbr -> $GITHUB_RUN_NUMBER"
           echo "action-name -> $GITHUB_ACTION"
-          echo "event-name" -> $GITHUB_EVENT_NAME
-          echo "path-json-trigger" -> $GITHUB_EVENT_PATH
+          echo "event-name -> $GITHUB_EVENT_NAME"
+          echo "path-json-trigger -> $GITHUB_EVENT_PATH:
           echo "repo-name -> $GITHUB_REPOSITORY"
-          echo "sha-commit" -> $GITHUB_SHA
-          echo "head-ref" -> $GITHUB_HEAD_REF
-          echo "base-ref" -> $GITHUB_BASE_REF
-          echo "user-name" -> $GITHUB_ACTOR
-          echo "path-workspace" -> $GITHUB_WORKSPACE
-          echo "token-wflow" -> $GITHUB_TOKEN
+          echo "sha-commit -> $GITHUB_SHA"
+          echo "head-ref -> $GITHUB_HEAD_REF"
+          echo "base-ref -> $GITHUB_BASE_REF"
+          echo "user-name -> $GITHUB_ACTOR"
+          echo "path-workspace -> $GITHUB_WORKSPACE"
+          echo "token-wflow -> $GITHUB_TOKEN"
           echo " *************** SYSTEM ENVS ***************"
           echo "runner-os -> $RUNNER_OS"
           echo "runner-arch -> $RUNNER_ARCH"
