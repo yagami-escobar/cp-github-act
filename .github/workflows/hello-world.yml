@@ -1,0 +1,80 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Hello-World Wflow
+
+on: # Controls when the workflow will run
+  push: # Triggers the workflow on push or pull request events but only for the "main" branch
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+  
+jobs: # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+  job1: # This workflow contains a single job called "build"
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: [16.15.1, 18, 18.04.0, 20]
+    name: job1 hello world
+    runs-on: ${{ matrix.os }} # The type of runner that the job will run on
+    
+    env:  # the variables are may defined at global or step level
+      ENVIRONMENT: develop
+      NAME: jhordan
+      
+    steps: # Steps represent a sequence of tasks that will be executed as part of the job
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.4
+        with:     
+          node-version: ${{ matrix.node-version }}
+          # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.
+          # registry-url: # optional
+          # Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).
+          # scope: # optional
+          # Used to pull node distributions from node-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.
+          # token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}
+          # Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm.
+          # cache: # optional
+          # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.
+          # cache-dependency-path: # optional
+                
+      - name: run a one-line script # Runs a single command using the runners shell
+        run: | 
+          echo "Hello World $NAME"
+          echo "You are in the $ENVIRONMENT environment !!"
+
+      - name: run hello-world from nodejs
+        run: node script/index.js
+      - name: run a multi-line script # Runs a set of commands using the runners shell
+        run: |
+          echo " *************** PREDIFINED ENVS ***************"
+          echo "wf-name -> $GITHUB_WORKFLOW"
+          echo "wf-name -> $GITHUB_WORKFLOW"
+          echo "build-id -> $GITHUB_RUN_ID"
+          echo "run-nbr -> $GITHUB_RUN_NUMBER"
+          echo "action-name -> $GITHUB_ACTION"
+          echo "event-name" -> $GITHUB_EVENT_NAME
+          echo "path-json-trigger" -> $GITHUB_EVENT_PATH
+          echo "repo-name -> $GITHUB_REPOSITORY"
+          echo "sha-commit" -> $GITHUB_SHA
+          echo "head-ref" -> $GITHUB_HEAD_REF
+          echo "base-ref" -> $GITHUB_BASE_REF
+          echo "user-name" -> $GITHUB_ACTOR
+          echo "path-workspace" -> $GITHUB_WORKSPACE
+          echo "token-wflow" -> $GITHUB_TOKEN
+          echo " *************** SYSTEM ENVS ***************"
+          echo "runner-os -> $RUNNER_OS"
+          echo "runner-arch -> $RUNNER_ARCH"
+          echo "runner-temp-> $RUNNER_TEMP"
+          echo "runner-workspace -> $RUNNER_WORKSPACE" 
+          echo " *************** GIT ENVS ***************"
+          echo "ref-short-name -> $GITHUB_REF_NAME"
+          echo "ref-type" -> $GITHUB_REF_TYPE"
+          echo "ref-head" -> $GITHUB_HEAD_REF"
+          echo "ref-base" -> $GITHUB_BASE_REF"
+          
+          
