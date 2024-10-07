@@ -3,53 +3,90 @@
 name: Hello-World Wflow
 
 on: # Controls when the workflow will run
-  push: # Triggers the workflow on push or pull request events but only for the "main" branch
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
-  
+#   push: # Triggers the workflow on push or pull request events but only for the "main" branch
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      node-versions:
+        description: 'NodeJS version'
+        required: true
+        default: '20.x'
+        type: choice
+        options:
+          - '16.x'
+          - '18.x'
+          - '20.x'
+      python-versions:
+        description: 'Python versions'
+        required: true
+        default: '3.12'
+        type: choice
+        options:
+          - '3.8'
+          - '3.9'
+          - '3.10'
+      os:
+        description: 'Operating System'
+        required: true
+        default: 'ubuntu-latest'
+        type: choice
+        options:
+          - 'ubuntu-latest'
+          - 'ubuntu-20.04'
+          - 'ubuntu-22.04'
+          - 'windows-latest'
+          - 'windows-2019'
+          - 'windows-2022'
+          - 'macos-latest'
+          - 'macos-12'
+          - 'macos-13'
 jobs: # A workflow run is made up of one or more jobs that can run sequentially or in parallel
   job1: # This workflow contains a single job called "build"
+    name: job1 hello world
+    runs-on: ${{ inputs.os }} # The type of runner that the job will run on
+
+		
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: [18, 20]
-    name: job1 hello world
-    runs-on: ${{ matrix.os }} # The type of runner that the job will run on
-    
+        node-version: [${{ inputs['node-versions'] }}]  # Corrección aquí
+        python-version: [${{ inputs['python-versions'] }}]  # Corrección aquí
+
     env:  # the variables are may defined at global or step level
       ENVIRONMENT: develop
       NAME: jhordan
+      USERNAME: $ {{ github.actor}}
       
     steps: # Steps represent a sequence of tasks that will be executed as part of the job
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: checkout
         uses: actions/checkout@v4
         
-      - name: Setup Node.js environment
+      - name: Setup Node.js ${{ inputs.node-versions }}
         uses: actions/setup-node@v4.0.4
         with:     
-          node-version: ${{ matrix.node-version }}
-          # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.
-          # registry-url: # optional
-          # Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).
-          # scope: # optional
-          # Used to pull node distributions from node-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.
-          # token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}
-          # Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm.
-          # cache: # optional
-          # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.
-          # cache-dependency-path: # optional
-                
-      - name: run a one-line script # Runs a single command using the runners shell
+          node-version: ${{ matrix.node-versions }}
+          
+      - name: Setup Python
+        uses: actions/setup-python@v5.2.0
+        with:
+          python-version: 3.12          
+          
+      - name: run custom msg # run a one-line scripts -> Runs a single command using the runners shell
         run: | 
-          echo "Hello World $NAME"
-          echo "You are in the $ENVIRONMENT environment !!"
-
-      - name: run hello-world from nodejs
+          echo "Hello World $NAME, You are in the $ENVIRONMENT environment !!"
+          
+      - name: run hello-world with nodejs
         run: node index.js
-      - name: run a multi-line script # Runs a set of commands using the runners shell
+
+      - name: define variable
+        run: echo "USERNAME=${{ GITHUB.ACTOR }}" >> $GITHUB_ENV
+      
+      - name: run hello-world with python
+        run: python hello-world.py
+        
+      - name:  # run a multi-line script -> Runs a set of commands using the runners shell -> 
         run: |
           echo " *************** PREDIFINED ENVS ***************"
           echo "wf-name -> $GITHUB_WORKFLOW"
@@ -76,5 +113,14 @@ jobs: # A workflow run is made up of one or more jobs that can run sequentially 
           echo "ref-type -> $GITHUB_REF_TYPE"
           echo "ref-head -> $GITHUB_HEAD_REF"
           echo "ref-base -> $GITHUB_BASE_REF"
+      
+      - name: install dependencies
+        run: npm install
+      
+      - name: build project
+        run: npm run build
+
+      - name: deploy app
+        run: echo "deploying with NodeJS ${{ matrix.node-versions}} on ${{ inputs.os }}"
           
           
