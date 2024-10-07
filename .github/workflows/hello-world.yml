@@ -73,8 +73,8 @@ jobs: # A workflow run is made up of one or more jobs that can run sequentially 
           echo "runner-workspace -> $RUNNER_WORKSPACE" 
           echo " *************** GIT ENVS ***************"
           echo "ref-short-name -> $GITHUB_REF_NAME"
-          echo "ref-type" -> $GITHUB_REF_TYPE"
-          echo "ref-head" -> $GITHUB_HEAD_REF"
-          echo "ref-base" -> $GITHUB_BASE_REF"
+          echo "ref-type -> $GITHUB_REF_TYPE"
+          echo "ref-head -> $GITHUB_HEAD_REF"
+          echo "ref-base -> $GITHUB_BASE_REF"
           
           
