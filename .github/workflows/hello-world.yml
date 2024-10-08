@@ -71,7 +71,13 @@ jobs: # A workflow run is made up of one or more jobs that can run sequentially 
       - name: Setup Python
         uses: actions/setup-python@v5.2.0
         with:
-          python-version: 3.12          
+          python-version: 3.12        
+
+      - name: Setup Java
+      - uses: actions/setup-java@v4
+  	with:
+    	 distribution: 'temurin' # See 'Supported distributions' for available options
+    	 java-version: '21'  
           
       - name: run custom msg # run a one-line scripts -> Runs a single command using the runners shell
         run: | 
@@ -79,6 +85,9 @@ jobs: # A workflow run is made up of one or more jobs that can run sequentially 
           
       - name: run hello-world with nodejs
         run: node index.js
+
+      - name: run HelloWorld.java with Java
+        run: java HelloWorld.java
 
       - name: define variable
         run: echo "USERNAME=${{ GITHUB.ACTOR }}" >> $GITHUB_ENV
