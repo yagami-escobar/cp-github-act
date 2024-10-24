@@ -42,7 +42,7 @@ on: # Controls when the workflow will run
           - 'macos-latest'
           - 'macos-12'
           - 'macos-13'
-jobs: # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
   job1: # This workflow contains a single job called "build"
     name: job1 hello world
     runs-on: ${{ inputs.os }} # The type of runner that the job will run on
