@@ -69,6 +69,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5.2.0
         with:
+<<<<<<< HEAD:.github/workflows/hola-mundo.yml
           python-version: ${{ matrix.python-versions }}
 
       - uses: actions/setup-java@v4
@@ -77,6 +78,17 @@ jobs:
           java-version: '21'
 	
       - name: run custom msg # run a one-line script
+=======
+          python-version: 3.12        
+
+      - name: Setup Java
+      - uses: actions/setup-java@v4
+  	with:
+    	 distribution: 'temurin' # See 'Supported distributions' for available options
+    	 java-version: '21'  
+          
+      - name: run custom msg # run a one-line scripts -> Runs a single command using the runners shell
+>>>>>>> de5ecddd2f48998024d16834d7b5220fbcaea230:.github/workflows/hello-world.yml
         run: | 
           echo "Hello World $NAME, You are in the $ENVIRONMENT environment !!"
 		
