@@ -4,7 +4,7 @@ name: Hello-World # nombre del WF que aparecera en la pestana de actions de gith
 run-name: run Hello-World
 on: # Controls when the workflow will run
   push: # Triggers the workflow on push or pull request events but only for the "main" branch
-    branches: [ "main" ]
+    branches: [ "aprendiendo-github-actions" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
