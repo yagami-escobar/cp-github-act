@@ -49,8 +49,8 @@ jobs:
     
     strategy:
       matrix:
-        node-versions: [${{ inputs.node-versions }}]
-        python-versions: [${{ inputs.python-versions }}]
+        node-versions: ${{ inputs.node-versions }}
+        python-versions: ${{ inputs.python-versions }}
     
     env:  # the variables are defined at global or step level
       ENVIRONMENT: develop
@@ -69,47 +69,30 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5.2.0
         with:
-<<<<<<< HEAD
-<<<<<<< HEAD:.github/workflows/hola-mundo.yml
-=======
->>>>>>> 8469eb16577b4341e8773f7c6a660863d5716f6a
           python-version: ${{ matrix.python-versions }}
 
-      - uses: actions/setup-java@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '21'
-	
-      - name: run custom msg # run a one-line script
-<<<<<<< HEAD
-=======
-          python-version: 3.12        
 
-      - name: Setup Java
-      - uses: actions/setup-java@v4
-  	with:
-    	 distribution: 'temurin' # See 'Supported distributions' for available options
-    	 java-version: '21'  
-          
-      - name: run custom msg # run a one-line scripts -> Runs a single command using the runners shell
->>>>>>> de5ecddd2f48998024d16834d7b5220fbcaea230:.github/workflows/hello-world.yml
-=======
->>>>>>> 8469eb16577b4341e8773f7c6a660863d5716f6a
+      - name: run custom msg # run a one-line script
         run: | 
           echo "Hello World $NAME, You are in the $ENVIRONMENT environment !!"
-		
-      - name: run hello-world with nodejs
-        run: node index.js
 
-      - name: run HelloWorld.java with Java
+      - name: run HelloWorld with NodeJS
+        run: node HelloWorld.js
+
+      - name: run HelloWorld with Java
         run: java HelloWorld.java
 
       - name: define variable
         run: echo "USERNAME=${{ github.actor }}" >> $GITHUB_ENV
-	
-      - name: run hello-world with python
-        run: python hello-world.py
-	
+
+      - name: run HelloWorld with Python
+        run: python HelloWorld.py
+
       - name: # run a multi-line script 
         run: |
           echo " *************** PREDIFINED ENVS ***************"
@@ -136,10 +119,10 @@ jobs:
           echo "ref-type -> $GITHUB_REF_TYPE"
           echo "ref-head -> $GITHUB_HEAD_REF"
           echo "ref-base -> $GITHUB_BASE_REF"
-	
+
       - name: install dependencies
         run: npm install
-	
+
       - name: build project
         run: npm run build
 
