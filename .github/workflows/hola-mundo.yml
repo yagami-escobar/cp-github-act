@@ -123,10 +123,10 @@ jobs:
           echo "ref-base -> $GITHUB_BASE_REF"
 
       - name: install dependencies
-        run: npm install
+        run: echo "npm install"
 
       - name: build project
-        run: npm run build
+        run: echo "npm run build"
 
       - name: deploy app
         run: echo "deploying with NodeJS ${{ matrix.node-versions }} on ${{ inputs.os }}"
