@@ -1,7 +1,7 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Hello-World Wflow
-
+name: Hello-World # nombre del WF que aparecera en la pestana de actions de github.
+run-name: run Hello-World
 on: # Controls when the workflow will run
   push: # Triggers the workflow on push or pull request events but only for the "main" branch
     branches: [ "main" ]
@@ -49,8 +49,10 @@ jobs:
     
     strategy:
       matrix:
-        node-versions: ${{ inputs.node-versions }}
-        python-versions: ${{ inputs.python-versions }}
+        include:
+        - node-versions: ${{ inputs.node-versions }} 
+          python-versions: ${{ inputs.python-versions }}
+          os: ${{ inputs.os }}
     
     env:  # the variables are defined at global or step level
       ENVIRONMENT: develop
