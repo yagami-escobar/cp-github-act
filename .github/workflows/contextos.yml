@@ -45,4 +45,5 @@ jobs:
         id: idstep3
         run: |
           echo "// ---------------------------- CONTEXT STEP ---------------------------- //"
-          echo "Variable del paso anterior $MY_OUTPUT"
+          echo "Variable del paso anterior v1 $MY_OUTPUT"
+          echo "Variable del paso anterior v2 ${{ env.MY_OUTPUT }}"
