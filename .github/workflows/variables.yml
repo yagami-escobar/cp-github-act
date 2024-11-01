@@ -1,0 +1,26 @@
+name: Contextos
+run-name: Runner Contextos
+on:
+  push:
+    branches: ['aprendiendo-github-actions', 'main'] 
+    paths: ['**/*']
+env:
+  USERNAME: 'yagami-escobar'
+  AGE: '28'
+  TECH: 'Github-Action'
+jobs:
+  ## JOB1
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: step1
+        id: idstep1
+        run: echo "MY_OUTPUT=Jhordan 69" >> $GITHUB_ENV
+      
+      - name: step2
+        id: idstep3
+        run: |
+          echo "Variable del paso anterior v2 ${{ env.MY_OUTPUT }}"
+          echo " print ENV1 -> USERNAME: ${{ env.USERNAME }}"
+          echo " print ENV1 -> AGE: ${{ env.AGE }}"
+          echo " print ENV1 -> TECH: ${{ env.TECH }}"
