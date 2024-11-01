@@ -4,9 +4,23 @@ name: Hello-World # nombre del WF que aparecera en la pestana de actions de gith
 run-name: run Hello-World
 on: # Controls when the workflow will run
   push: # Triggers the workflow on push or pull request events but only for the "main" branch
-    branches: [ "aprendiendo-github-actions" ]
+    branches:
+      - 'aprendiendo-github-actions'
+      - 'releases/**'
+    paths:
+      - '**/*'
   pull_request:
-    branches: [ "main" ]
+    types: [opened, labeled]
+    branches:
+      - 'main'
+      - 'releases/**'
+    paths:
+      - '**.js'
+  issues:
+    types: [opened, edited, closed]
+  issue_comment:
+    types: [created, deleted]
+
   workflow_dispatch:
     inputs:
       node-versions:
@@ -42,6 +56,19 @@ on: # Controls when the workflow will run
           - 'macos-latest'
           - 'macos-12'
           - 'macos-13'
+      role:
+        description: 'Role executer'
+        required: true
+        type: boolean
+      
+      environment:
+        description: 'Environment'
+        required: false
+        type: string
+      
+      schedule:
+        - cron: '30 9,21 * * *'
+      
 jobs:
   job1: # This workflow contains a single job called "build"
     name: job1 hello world
@@ -50,9 +77,9 @@ jobs:
     strategy:
       matrix:
         # include:
-        node-versions: ['16.x', '18.x', 20.x]
-        python-versions: ['3.8', '3.9', '3.10', '3.11', '3.12']
-        os: ['ubuntu-latest', 'ubuntu-22.04', 'ubuntu-20.04', 'windows-latest', 'windows-2022', 'windows-2019', 'macos-latest', 'macos-13', 'macos-12']
+        node-versions: ['18.x', 20.x]
+        python-versions: ['3.12']
+        os: ['ubuntu-latest', 'ubuntu-22.04', 'ubuntu-20.04']
     
     env:  # the variables are defined at global or step level
       ENVIRONMENT: develop
@@ -64,6 +91,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node.js ${{ matrix.node-versions }}
+      
         if: $${{ matrix.node-versions == '20.x' }}
         uses: actions/setup-node@v4.0.4
         with:     
