@@ -16,7 +16,7 @@ on:
     inputs:
       osx:
         description: 'OSx'
-        required: no
+        required: false
         default: 'ubuntu-latest'
         type: choice
         options: ['ubuntu-latest', 'ubuntu-22.04']
@@ -28,7 +28,7 @@ on:
         options: ['18.x', '20.x']
       java-versions:
         description: 'Java version'
-        required: yes
+        required: true
         default: 17
         type: choice
         options: ['11', '17', '21']
@@ -53,79 +53,79 @@ on:
         type: boolean
   schedule:
      - cron: '59 23 * * *'
-  jobs:
-    job1:
-      name: job1
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          include:
-           node-versions: ['20.x']
-           python-versions: ['3.12']
-           java-version: ['21']
-      env:
-       ENVIRONMENT: develop
-       NAME: jhordan
-       USERNAME: ${{ github.actor }}
-      steps:
-        - name: checkout
-          uses: actions/checkout@v4
+jobs:
+  job1:
+    name: job1
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - node-versions: ['20.x']
+            python-versions: ['3.12']
+            java-version: ['21']
+    env:
+     ENVIRONMENT: develop
+     NAME: jhordan
+     USERNAME: ${{ github.actor }}
 
-        - name: setup java ${{ inputs.osx }}
-          uses: actions/setup-java@v4
-          if: ${{ github.event_name == 'workflow_dispatch' }}
-          with:
-            distribution: 'temurin'
-            java-version: ${{ inputs.java-version }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
 
-        - name: setup java ${{ matrix.java-version }}
-          uses: actions/setup-java@v4
-          if: ${{ github.event_name != 'workflow_dispatch' }}
-          with:
-            distribution: 'temurin'
-            java-version: ${{ matrix.java-version }}
-        
-        - name: setup nodejs ${{ inputs.node-versions}} 
-          uses: actions/setup-node@4.0.4
-          if: ${{ github.event_name == 'workflow_dispatch' }}
-          with:
-            node-version: ${{ inputs.node-versions}}
+      - name: setup java ${{ inputs.osx }}
+        uses: actions/setup-java@v4
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        with:
+          distribution: 'temurin'
+          java-version: ${{ inputs.java-version }}
 
-        - name: setup nodejs ${{ matrix.node-versions }}
-          uses: actions/setup-node@4.0.4
-          if: ${{ github.event_name != 'workflow_dispatch' }}
-          with:
-            node-version: ${{ matrix.node-versions }}
-       
-        - name: setup python ${{ inputs.python-versions}}
-          uses: actions/setup-python@5.2.0
-          if: ${{ github.event_name == 'workflow_dispatch' }}
-          with:
-            python-version: ${{ inputs.python-versions }}
-        
-        - name: setup python ${{ matrix.python-versions }}
-          uses: actions/setup-python@5.2.0
-          if: ${{ github.event_name != 'workflow_dispatch' }}
-          with:
-            python-version: ${{ matrix.python-versions }}
-       
-        - name: run HelloWorld from Java
-          run: java HelloWorld.java
-
-        - name: run HelloWorld from Node
-          run: node HelloWorld.js
-
-        - name: run HelloWorld from Python
-          run: python HelloWorld.py
-
-        - name: Run Test
-          run: |
-            echo "Run Test1"
-            echo "Run Test2"
-
-        - name: Run Build
-          run: echo "mvn clean install" 
+      - name: setup java ${{ matrix.java-version }}
+        uses: actions/setup-java@v4
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java-version }}
+      
+      - name: setup nodejs ${{ inputs.node-versions}} 
+        uses: actions/setup-node@4.0.4
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        with:
+          node-version: ${{ inputs.node-versions}}
+      - name: setup nodejs ${{ matrix.node-versions }}
+        uses: actions/setup-node@4.0.4
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        with:
+          node-version: ${{ matrix.node-versions }}
      
-        - name: Run Deploy
-          run: echo "Deploying with Java"
+      - name: setup python ${{ inputs.python-versions}}
+        uses: actions/setup-python@5.2.0
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        with:
+          python-version: ${{ inputs.python-versions }}
+      
+      - name: setup python ${{ matrix.python-versions }}
+        uses: actions/setup-python@5.2.0
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        with:
+          python-version: ${{ matrix.python-versions }}
+     
+      - name: run HelloWorld from Java
+        run: java HelloWorld.java
+
+      - name: run HelloWorld from Node
+        run: node HelloWorld.js
+
+      - name: run HelloWorld from Python
+        run: python HelloWorld.py
+
+      - name: Run Test
+        run: |
+          echo "Run Test1"
+          echo "Run Test2"
+
+      - name: Run Build
+        run: echo "mvn clean install" 
+   
+      - name: Run Deploy
+        run: echo "Deploying with Java"
 
