@@ -1,5 +1,5 @@
-name: Contextos
-run-name: Runner Contextos
+name: Variables
+run-name: Runner Variables
 on:
   push:
     branches: ['aprendiendo-github-actions', 'main'] 
