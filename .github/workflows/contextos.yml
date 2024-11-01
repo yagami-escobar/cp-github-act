@@ -39,10 +39,10 @@ jobs:
       
       - name: step2
         id: idstep2
-        run: echo "MY_OUTPUT=Jhordan69" >> $GITHUB_ENV
+        run: echo "MY_OUTPUT=Jhordan 69" >> $GITHUB_ENV
       
       - name: step3
         id: idstep3
         run: |
           echo "// ---------------------------- CONTEXT STEP ---------------------------- //"
-          echo "Variable del paso anterior ${{ steps.idstep2.outputs.MY_OUTPUT}}"
+          echo "Variable del paso anterior ${{ steps.idstep2.outputs.MY_OUTPUT }}"
