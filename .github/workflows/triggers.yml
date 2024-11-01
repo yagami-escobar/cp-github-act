@@ -89,13 +89,13 @@ jobs:
 
       ## SETUP NODEJS
       - name: setup nodejs ${{ inputs.node-versions }} 
-        uses: actions/setup-node@v4.0.4
+        uses: actions/setup-node@v4.1.0
         if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
           node-version: ${{ inputs.node-versions }}
 
       - name: setup nodejs ${{ matrix.node-versions }}
-        uses: actions/setup-node@v4.0.4
+        uses: actions/setup-node@v4.1.0
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
           node-version: ${{ matrix.node-versions }}
