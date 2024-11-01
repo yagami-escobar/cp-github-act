@@ -64,9 +64,9 @@ jobs:
             python-versions: ['3.12']
             java-version: ['21']
     env:
-     ENVIRONMENT: develop
-     NAME: jhordan
-     USERNAME: ${{ github.actor }}
+      ENVIRONMENT: develop
+      NAME: jhordan
+      USERNAME: ${{ github.actor }}
 
     steps:
       - name: checkout
@@ -87,24 +87,24 @@ jobs:
           java-version: ${{ matrix.java-version }}
       
       - name: setup nodejs ${{ inputs.node-versions}} 
-        uses: actions/setup-node@4.0.4
+        uses: actions/setup-node@v4.0.4
         if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
           node-version: ${{ inputs.node-versions}}
       - name: setup nodejs ${{ matrix.node-versions }}
-        uses: actions/setup-node@4.0.4
+        uses: actions/setup-node@v4.0.4
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
           node-version: ${{ matrix.node-versions }}
      
       - name: setup python ${{ inputs.python-versions}}
-        uses: actions/setup-python@5.2.0
+        uses: actions/setup-python@v5.2.0
         if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
           python-version: ${{ inputs.python-versions }}
       
       - name: setup python ${{ matrix.python-versions }}
-        uses: actions/setup-python@5.2.0
+        uses: actions/setup-python@v5.2.0
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
           python-version: ${{ matrix.python-versions }}
