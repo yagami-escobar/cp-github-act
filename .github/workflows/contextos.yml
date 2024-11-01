@@ -1,0 +1,48 @@
+name: Contextos
+run-name: Runner Contextos
+on:
+  push:
+    branches: ['aprendiendo-github-actions', 'main'] 
+    paths: ['**/*']
+jobs:
+  ## JOB1
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Context Runner
+        run: |
+          echo "// ---------------------------- CONTEXT RUNNER ---------------------------- //"
+          echo "RUNNER OSX: ${{ runner.os }}"
+          echo "RUNNER ARCH: ${{ runner.arch }}"
+          echo "RUNNER WKS: $RUNNER_WORKSPACE"
+          echo "RUNNER TEMP: ${{ runner.temp }}"
+
+      - name: Context Job
+        run: |
+          echo "// ---------------------------- CONTEXT JOB ---------------------------- //"
+          echo "JOB STATUS: ${{ job.status }}"
+
+      - name: run multiline scripts
+        run: |
+          echo "// ---------------------------- CONTEXT GITHUB ---------------------------- //"
+          echo "WF NAME: ${{ github.workflow }}"
+          echo "ACTION: ${{ github.action}} "
+          echo "ACTION_PATH: ${{ github.action_path}}"
+          echo "ACTION_REPO: ${{ github.action_repository}}"
+          echo "ACTION_STATUS: ${{ github.action_status}}"
+          echo "EVENT: ${{ github.event_name }}"
+          echo "REPOSITORY: ${{ github.repository }}"
+          echo "ACTION: ${{ github.action }}"
+          echo "SHA COMMIT: ${{ github.sha }}"
+          echo "REF: ${{ github.ref }}"
+          echo "actor: ${{ github.actor }}"
+      
+      - name: step2
+        id: idstep2
+        run: echo "MY_OUTPUT=Jhordan69" >> $GITHUB_ENV
+      
+      - name: step3
+        id: idstep3
+        run: |
+          echo "// ---------------------------- CONTEXT STEP ---------------------------- //"
+          echo "Variable del paso anterior ${{ steps.idstep2.outputs.MY_OUTPUT}}"
