@@ -2,7 +2,7 @@ name: Expresiones
 run-name: Runner Expresiones
 on:
   push:
-    branches: ['aprendiendo-github-actions'] 
+    branches: ['aprendiendo-github-actions', 'main'] 
     paths: ['**/*']
   workflow_dispatch:
     inputs:
