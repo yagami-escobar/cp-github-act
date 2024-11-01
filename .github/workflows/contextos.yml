@@ -45,4 +45,4 @@ jobs:
         id: idstep3
         run: |
           echo "// ---------------------------- CONTEXT STEP ---------------------------- //"
-          echo "Variable del paso anterior ${{ steps.idstep2.outputs.MY_OUTPUT }}"
+          echo "Variable del paso anterior $MY_OUTPUT"
