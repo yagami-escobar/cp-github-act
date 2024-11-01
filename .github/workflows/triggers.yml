@@ -1,0 +1,135 @@
+name: Triggers
+run-name: Runner Triggers
+on:
+  push:
+    branches: ['aprendiendo-github-actions', 'releases/**', 'main']
+    paths: '**/*'
+  pull_request:
+    types: ['opened', 'labeled', 'closed']
+    branches: ['aprendiendo-github-actions', 'release/**', 'main']
+    paths: '**/*'
+  issues:
+    types: ['opened', 'edited', 'closed']
+  issue_comment:
+    types: ['created', 'deleted']
+  workflow_dispatch:
+    inputs:
+      osx:
+        description: 'OSx'
+        required: false
+        default: 'ubuntu-latest'
+        type: choice
+        options: ['ubuntu-latest', 'ubuntu-22.04']
+      node-versions:
+        description: 'NodeJs version'
+        required: true
+        default: '20.x'
+        type: choice
+        options: ['18.x', '20.x']
+      java-versions:
+        description: 'Java version'
+        required: true
+        default: '17'
+        type: choice
+        options: ['11', '17', '21']
+      python-versions:
+        description: 'Python version'
+        required: true
+        default: '3.12'
+        type: choice
+        options: ['3.11', '3.12']
+      role:
+        description: 'Role executor'
+        required: true
+        type: choice
+        options: ['DevSecOps', 'DevOps', 'QA', 'Developer', 'LT']
+      ticket:
+        description: 'tiket relationed'
+        required: false
+        type: string
+      enable_debugging:
+        description: 'enable debuggin yes or no'
+        required: false
+        type: boolean
+  schedule:
+    - cron: '59 23 * * *'
+jobs:
+  job1:
+    name: job1
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - node-versions: '20.x'
+            python-versions: '3.12'
+            java-versions: '21'
+    env:
+      ENVIRONMENT: develop
+      NAME: jhordan
+      USERNAME: ${{ github.actor }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      
+      ## SETUP JAVA
+      - name: setup java ${{ inputs.java-versions }}
+        uses: actions/setup-java@v4
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        with:
+          distribution: 'temurin'
+          java-version: ${{ inputs.java-versions }}
+
+      - name: setup java ${{ matrix.java-versions }}
+        uses: actions/setup-java@v4
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java-versions }}
+
+      ## SETUP NODEJS
+      - name: setup nodejs ${{ inputs.node-versions }} 
+        uses: actions/setup-node@v4.0.4
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        with:
+          node-version: ${{ inputs.node-versions }}
+
+      - name: setup nodejs ${{ matrix.node-versions }}
+        uses: actions/setup-node@v4.0.4
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        with:
+          node-version: ${{ matrix.node-versions }}
+     
+     ## SETUP PYTHON
+      - name: setup python ${{ inputs.python-versions }}
+        uses: actions/setup-python@v5.2.0
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        with:
+          python-version: ${{ inputs.python-versions }}
+      
+      - name: setup python ${{ matrix.python-versions }}
+        uses: actions/setup-python@v5.2.0
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        with:
+          python-version: ${{ matrix.python-versions }}
+     
+      - name: run HelloWorld from Java
+        run: java HelloWorld.java
+
+      - name: run HelloWorld from Node
+        run: node HelloWorld.js
+
+      - name: run HelloWorld from Python
+        run: python HelloWorld.py
+
+      - name: Run Test
+        run: |
+          echo "Run Test1"
+          echo "Run Test2"
+
+      - name: Run Build
+        run: echo "mvn clean install" 
+   
+      - name: Run Deploy
+        run: echo "Deploying with Java"
+

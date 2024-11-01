@@ -1,0 +1,41 @@
+name: Expresiones
+run-name: Runner Expresiones
+on:
+  push:
+    branches: ['aprendiendo-github-actions', 'main'] 
+    paths: ['**/*']
+  workflow_dispatch:
+    inputs:
+      edad:
+        description: 'Edad'
+        required: true
+        type: string
+      nombre:
+        description: 'Nombre'
+        required: true
+        default: 'Jhordan'
+        type: string
+jobs:
+  ## JOB1
+  job1:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: run > 18
+        if: ${{ inputs.edad >= 18 }}
+        run: echo ${{ inputs.nombre }} es mayor de edad.
+      
+      - name: run < 18
+        if: ${{ inputs.edad < 18 }}
+        run: echo ${{ inputs.nombre }} es menor de edad.
+  ## JOB2
+  job2:
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    runs-on: ubuntu-22.04
+    env:
+      USERNAME: 'jhordan'
+      AGE: '28'
+    steps:
+        - name: Welcome
+          run: echo "Hola ${{ env.USERNAME }} tienes ${{ env.AGE }} de edad."
+

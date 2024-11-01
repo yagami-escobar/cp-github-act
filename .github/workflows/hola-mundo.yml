@@ -4,9 +4,23 @@ name: Hello-World # nombre del WF que aparecera en la pestana de actions de gith
 run-name: run Hello-World
 on: # Controls when the workflow will run
   push: # Triggers the workflow on push or pull request events but only for the "main" branch
-    branches: [ "aprendiendo-github-actions" ]
+    branches:
+      - 'aprendiendo-github-actions'
+      - 'releases/**'
+    paths:
+      - '**/*'
   pull_request:
-    branches: [ "main" ]
+    types: [opened, labeled]
+    branches:
+      - 'main'
+      - 'releases/**'
+    paths:
+      - '**.js'
+  issues:
+    types: [opened, edited, closed]
+  issue_comment:
+    types: [created, deleted]
+
   workflow_dispatch:
     inputs:
       node-versions:
@@ -42,17 +56,30 @@ on: # Controls when the workflow will run
           - 'macos-latest'
           - 'macos-12'
           - 'macos-13'
+      role:
+        description: 'Role executer'
+        required: true
+        type: boolean
+      
+      environment:
+        description: 'Environment'
+        required: false
+        type: string
+      
+  schedule:
+    - cron: '30 9,21 * * *'
+      
 jobs:
   job1: # This workflow contains a single job called "build"
     name: job1 hello world
-    runs-on: ${{ inputs.os }} # The type of runner that the job will run on
+    runs-on: ubuntu-latest # The type of runner that the job will run on
     
     strategy:
       matrix:
-        include:
-        - node-versions: ${{ inputs.node-versions }} 
-          python-versions: ${{ inputs.python-versions }}
-          os: ${{ inputs.os }}
+        # include:
+        node-versions: ['18.x', 20.x]
+        python-versions: ['3.12']
+        os: ['ubuntu-latest', 'ubuntu-22.04', 'ubuntu-20.04']
     
     env:  # the variables are defined at global or step level
       ENVIRONMENT: develop
@@ -63,12 +90,14 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ inputs.node-versions }}
+      - name: Setup Node.js ${{ matrix.node-versions }}
+        if: $${{ matrix.node-versions == '20.x' }}
         uses: actions/setup-node@v4.0.4
         with:     
           node-version: ${{ matrix.node-versions }}
 
       - name: Setup Python
+        if: ${{ matrix.python-versions == '3.12'}}
         uses: actions/setup-python@v5.2.0
         with:
           python-version: ${{ matrix.python-versions }}
@@ -95,7 +124,7 @@ jobs:
       - name: run HelloWorld with Python
         run: python HelloWorld.py
 
-      - name: # run a multi-line script 
+      - name: run a multi-line script 
         run: |
           echo " *************** PREDIFINED ENVS ***************"
           echo "wf-name -> $GITHUB_WORKFLOW"
@@ -123,10 +152,11 @@ jobs:
           echo "ref-base -> $GITHUB_BASE_REF"
 
       - name: install dependencies
-        run: npm install
+        run: echo "npm install"
 
       - name: build project
-        run: npm run build
+        run: echo "npm run build"
 
       - name: deploy app
-        run: echo "deploying with NodeJS ${{ matrix.node-versions }} on ${{ inputs.os }}"
+        if: ${{ matrix.node-versions == '20.x' && matrix.os == 'ubuntu-latest' }}
+        run: echo "deploying with NodeJS ${{ matrix.node-versions }} on ${{ matrix.os }}"

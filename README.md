@@ -20,11 +20,7 @@ _Aprende los conceptos básicos para crear tu primer flujo de CI/CD para tus pro
   Do not use quotes on the <details> tag attributes.
 -->
 
-<<<<<<< HEAD
-<details id=0>
-=======
 <details id=0 open>
->>>>>>> 88baf3fc6a7fbfa14608e8d7da1f507ae5f24a89
 <summary><h2>Bienvenido</h2></summary>
 
 ¡Bienvenido al Curso Básico de GitHub Actions de Platzi! en este curso aprenderás a realizar flujos de Integración y Despliegue Continúo (CI/CD) para tus proyectos personales, así como automatizar cualquier proceso que que te ayude a impulsar tu flujo de trabajo :rocket:.
@@ -33,20 +29,12 @@ _Aprende los conceptos básicos para crear tu primer flujo de CI/CD para tus pro
 - **¿Qué aprenderás?**: Aprenderás a automatizar los procesos de compilación, pruebas y despliegue de sus proyectos.
 - **¿Qué construirás?**: Una serie de flujos de trabajo que usen los principales conceptos detrás de GitHub Actions (Jobs, Steps, Actions, Variables, Expresiones, entre otros).
 - **Prerequisitos**: Conocimientos básicos sobre Git y GitHub (realizar commits y push; crear pull requests e issues; agregar etiquetas).
-<<<<<<< HEAD
-- **Duración**: Este curso tendrá X pasos y lo podrás terminar en Y horas.
-=======
 - **Duración**: Este curso tendrá 5 pasos y lo podrás terminar en menos de 2 horas.
->>>>>>> 88baf3fc6a7fbfa14608e8d7da1f507ae5f24a89
 
 ## ¿Cómo iniciar el curso?
 
 1. Haz click derecho en **Start course** y abre el enlace en una nueva pestaña.
-<<<<<<< HEAD
-   <br />[![start-course](https://user-images.githubusercontent.com/1221423/218596841-0645fe1a-4aaf-4f51-9ab3-8aa2d3fdd487.svg)](TBD-generate)
-=======
    <br />[![start-course](https://user-images.githubusercontent.com/1221423/218596841-0645fe1a-4aaf-4f51-9ab3-8aa2d3fdd487.svg)](https://github.com/platzi/curso-github-actions/generate)
->>>>>>> 88baf3fc6a7fbfa14608e8d7da1f507ae5f24a89
 2. En la nueva pestaña, llena los campos para crear un nuevo repositorio.
    - En owner, elige tu cuenta personal o la de tu organización.
    - Es recomendado dejar el repositorio como público ya que los privados consumen [minutos que pueden ser cobrados](https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions).
@@ -64,11 +52,7 @@ _Aprende los conceptos básicos para crear tu primer flujo de CI/CD para tus pro
   TBD-step-1-notes.
 -->
 
-<<<<<<< HEAD
-<details id=1 open>
-=======
 <details id=1>
->>>>>>> 88baf3fc6a7fbfa14608e8d7da1f507ae5f24a89
 <summary><h2>Paso 1: Crea tu primer workflow file</h2></summary>
 
 _¡Bienvenido al "Curso Básico de GitHub Actions"! :wave:_
@@ -177,10 +161,7 @@ Ahora que conoces los componentes básicos de un workflow en GitHub Actions pode
   Agregue el siguiente contenido al archivo `triggers.yml`:
   ```yaml
   name: Triggers
-<<<<<<< HEAD
-=======
   run-name: ¡Estoy aprendiendo a usar diferentes Triggers!
->>>>>>> 88baf3fc6a7fbfa14608e8d7da1f507ae5f24a89
   on:
     push:
       branches:
@@ -271,10 +252,7 @@ Puedes combinar valores literales, referencias de contexto y funciones usando op
   Agregue el siguiente contenido al archivo `expresiones.yml`:
   ```yaml
   name: Expresiones
-<<<<<<< HEAD
-=======
   run-name: ¡Estoy aprendiendo a usar Expresiones!
->>>>>>> 88baf3fc6a7fbfa14608e8d7da1f507ae5f24a89
   on:
     workflow_dispatch:
       inputs:
@@ -346,10 +324,7 @@ Los más usados son:
   Agregue el siguiente contenido al archivo `contextos.yml`:
   ```yaml
   name: Contexto
-<<<<<<< HEAD
-=======
   run-name: ¡Estoy aprendiendo a usar Contextos!
->>>>>>> 88baf3fc6a7fbfa14608e8d7da1f507ae5f24a89
   on: push
   jobs:
     check-main:
@@ -392,10 +367,7 @@ El uso de variables de entorno es lo único que te falta por aprender de los pri
   Agregue el siguiente contenido al archivo `variables.yml`:
   ```yaml
   name: Saludo usando variables
-<<<<<<< HEAD
-=======
   run-name: ¡Estoy aprendiendo a usar Variables!
->>>>>>> 88baf3fc6a7fbfa14608e8d7da1f507ae5f24a89
   on:
     workflow_dispatch
   env:
