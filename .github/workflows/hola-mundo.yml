@@ -66,8 +66,8 @@ on: # Controls when the workflow will run
         required: false
         type: string
       
-      schedule:
-        - cron: '30 9,21 * * *'
+  schedule:
+    - cron: '30 9,21 * * *'
       
 jobs:
   job1: # This workflow contains a single job called "build"

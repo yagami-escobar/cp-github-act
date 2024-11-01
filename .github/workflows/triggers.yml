@@ -20,7 +20,7 @@ on:
         default: 'ubuntu-latest'
         type: choice
         options: ['ubuntu-latest', 'ubuntu-22.04']
-      node-version:
+      node-versions:
         description: 'NodeJs version'
         required: true
         default: '20.x'
@@ -29,7 +29,7 @@ on:
       java-versions:
         description: 'Java version'
         required: true
-        default: 17
+        default: '17'
         type: choice
         options: ['11', '17', '21']
       python-versions:
@@ -62,7 +62,7 @@ jobs:
         include:
           - node-versions: ['20.x']
             python-versions: ['3.12']
-            java-version: ['21']
+            java-versions: ['21']
     env:
       ENVIRONMENT: develop
       NAME: jhordan
@@ -71,33 +71,37 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
-
-      - name: setup java ${{ inputs.osx }}
+      
+      ## SETUP JAVA
+      - name: setup java ${{ inputs.java-versions }}
         uses: actions/setup-java@v4
         if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
           distribution: 'temurin'
-          java-version: ${{ inputs.java-version }}
+          java-version: ${{ inputs.java-versions }}
 
-      - name: setup java ${{ matrix.java-version }}
+      - name: setup java ${{ matrix.java-versions }}
         uses: actions/setup-java@v4
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
           distribution: 'temurin'
-          java-version: ${{ matrix.java-version }}
-      
-      - name: setup nodejs ${{ inputs.node-versions}} 
+          java-version: ${{ matrix.java-versions }}
+
+      ## SETUP NODEJS
+      - name: setup nodejs ${{ inputs.node-versions }} 
         uses: actions/setup-node@v4.0.4
         if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
-          node-version: ${{ inputs.node-versions}}
+          node-version: ${{ inputs.node-versions }}
+
       - name: setup nodejs ${{ matrix.node-versions }}
         uses: actions/setup-node@v4.0.4
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
           node-version: ${{ matrix.node-versions }}
      
-      - name: setup python ${{ inputs.python-versions}}
+     ## SETUP PYTHON
+      - name: setup python ${{ inputs.python-versions }}
         uses: actions/setup-python@v5.2.0
         if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
