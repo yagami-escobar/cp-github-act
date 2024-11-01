@@ -1,5 +1,5 @@
 name: Variables
-run-name: Runner Variables
+run-name: Runner Variabless
 on:
   push:
     branches: ['aprendiendo-github-actions', 'main'] 
