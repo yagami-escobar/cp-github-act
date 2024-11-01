@@ -102,13 +102,13 @@ jobs:
      
      ## SETUP PYTHON
       - name: setup python ${{ inputs.python-versions }}
-        uses: actions/setup-python@v5.2.0
+        uses: actions/setup-python@v5.3.0
         if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
           python-version: ${{ inputs.python-versions }}
       
       - name: setup python ${{ matrix.python-versions }}
-        uses: actions/setup-python@v5.2.0
+        uses: actions/setup-python@v5.3.0
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
           python-version: ${{ matrix.python-versions }}

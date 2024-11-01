@@ -98,7 +98,7 @@ jobs:
 
       - name: Setup Python
         if: ${{ matrix.python-versions == '3.12'}}
-        uses: actions/setup-python@v5.2.0
+        uses: actions/setup-python@v5.3.0
         with:
           python-version: ${{ matrix.python-versions }}
 
