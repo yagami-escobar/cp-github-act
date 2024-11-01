@@ -52,7 +52,7 @@ on:
         required: false
         type: boolean
   schedule:
-     - cron: '59 23 * * *'
+    - cron: '59 23 * * *'
 jobs:
   job1:
     name: job1
@@ -60,9 +60,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - node-versions: ['20.x']
-            python-versions: ['3.12']
-            java-versions: ['21']
+          - node-versions: '20.x'
+            python-versions: '3.12'
+            java-versions: '21'
     env:
       ENVIRONMENT: develop
       NAME: jhordan
