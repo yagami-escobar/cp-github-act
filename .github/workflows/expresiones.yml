@@ -13,12 +13,14 @@ on:
         default: 'Jhordan'
         type: string
 jobs:
+  ## JOB1
   job1:
     if: ${{ inputs.edad >= 18 }}
     runs-on: ubuntu-latest
     steps:
       - name: run script
         run: echo ${{ inputs.nombre }} es mayor de edad.
+  ## JOB2
   job2:
     if: ${{ inputs.edad < 18 }}
     runs-on: ubuntu-22.04
