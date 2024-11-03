@@ -116,7 +116,7 @@ jobs:
         run: node HelloWorld.js
 
       - name: run HelloWorld with Java
-        run: java HelloWorld.java
+        run: java HelloWorld.java    
 
       - name: define variable
         run: echo "USERNAME=${{ github.actor }}" >> $GITHUB_ENV
